@@ -5,13 +5,13 @@
   "license": "MIT",
   "dependencies": {
     "@vue/compiler-sfc": "3.0.7",
-    "vue": "^3.0.7",
-    "vue-router": "4.0.5",
-    "vuex": "4.0.0"
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "1.1.5",
-    "vite": "^2.1.1"
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.6"
   },
   "peerDependencies": {
     "@vue/compiler-sfc": "^3.0.7"
