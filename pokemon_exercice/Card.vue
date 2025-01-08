@@ -4,17 +4,17 @@
       
     <div 
       class="title">
-        <slot name="title" />
+        <slot name="title"></slot>
       </div>
 
     <div 
       class="content">
-      <slot name="content" />
+      <slot name="content"></slot>
       </div>
 
       <div 
       class="description">
-      <slot name="description" />
+      <slot name="description"></slot>
     </div>
 
     </div>
