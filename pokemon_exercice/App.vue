@@ -5,30 +5,46 @@
       et leur id, name, sprite, et type
       la fonction est asynchrone 
     </div> -->
+   
+<div class="cards">
+<card
+    v-for="pokemon in pokemons"
+    :key="id"
+    :pokemon="pokemon">
 
-    <div class="card">
-      <div class="title">
-        Title
-      </div>
+  <template v-slot:title>
+    {{ pokemon.name }}
+  </template>
 
-      <div class="content">
-        Content
-      </div>
+  <template v-slot:content>
+    <img :src="pokemon.sprite" />
+  </template>
 
-      <div class="description">
-        Description
-      </div>
-      <button @click="fetchOnePokemon">fetch One pokemon</button>
-      <button @click="fetchThreePokemon">fetch 3 pokemons</button>
+  <template v-slot:description>
+    <div v-for="type in pokemon.types">
+        {{type}}
     </div>
   </template>
   
+  </card>
+
+   
+  </div>
+    <button @click="fetchOnePokemon">fetch One pokemon</button>
+    <button @click="fetchThreePokemon">fetch 3 pokemons</button>
+  </template>
+  
   <script>
+
+  import Card from "./Card.vue"
 
   const api = 'https://pokeapi.co/api/v2/pokemon'
   const ids = [1, 4, 7]
 
   export default {
+    components: {
+      Card
+    },
     data() {
       return {
         pokemon: null,
@@ -57,6 +73,7 @@
         this.pokemons = json.map(datum => ({
           id: datum.id,
           name: datum.name,
+          sprite: datum.sprites.other['official-artwork'].front_default,
           types: datum.types.map(e => e.type.name)
         }))
 
@@ -64,10 +81,19 @@
         console.log("this.pokemons", this.pokemons)
       }
     },
+    created() {
+      this.fetchThreePokemon()
+    }
   };
   </script>
   
   <style scoped>
+  .cards {
+  display: flex
+}
+img { 
+  width: 100%
+}
   .card {
     border: 1px solid silver;
     border-radius: 8px;
