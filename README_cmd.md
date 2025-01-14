@@ -1,0 +1,1 @@
+yarn vite --config vite.config.js pokemon  
