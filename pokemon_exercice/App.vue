@@ -5,78 +5,46 @@
       et leur id, name, sprite, et type
       la fonction est asynchrone 
     </div> -->
-   
-<div class="cards">
-  <card
-    v-for="pokemon in pokemons"
-    :key="id"
-    :pokemon="pokemon"
-    @click="fetchEvolution(pokemon)">
+    <pokemon-card
+      :pokemons="pokemons"
+      @chosen="fetchEvolution"
+      :selectedId = "selectedId">
+    </pokemon-card>
 
-  <template v-slot:title>
-    {{ pokemon.name }}
-  </template>
+    <pokemon-card
+      :pokemons="evolutions">
+    </pokemon-card>
 
-  <template v-slot:content>
-    <img :src="pokemon.sprite" />
-  </template>
-
-  <template v-slot:description>
-    <div v-for="type in pokemon.types">
-        {{type}}
-    </div>
-  </template>
-  
-  </card> 
-  </div>
-
-  <div class="cards">
-    <card
-      v-for="pokemon in evolutions"
-      :key="id"
-      :pokemon="pokemon">
-
-    <template v-slot:title>
-      {{ pokemon.name }}
-    </template>
-
-    <template v-slot:content>
-      <img :src="pokemon.sprite" />
-    </template>
-
-    <template v-slot:description>
-      <div v-for="type in pokemon.types">
-        {{type}}
-      </div>
-    </template>
-  
-  </card> 
-  </div>
     <button @click="fetchOnePokemon">fetch One pokemon</button>
     <button @click="fetchData">fetch 3 pokemons</button>
-  </template>
+</template>
   
-  <script>
+<script>
 
   import Card from "./Card.vue"
+  import PokemonCard from "./PokemonCard.vue"
+
 
   const api = 'https://pokeapi.co/api/v2/pokemon'
   const IDS = [1, 4, 7]
 
   export default {
     components: {
-      Card
+      Card,
+      PokemonCard
     },
     data() {
       return {
         pokemon: null,
         pokemons: [],
-        evolutions: []
+        evolutions: [],
+        selectedId: null
       }
     },
     methods: {
       async fetchEvolution(pokemon) {
         this.evolutions = await this.fetchData([pokemon.id +1,pokemon.id +2])
+        this.selectedId = pokemon.id
       },
 /*       async fetchOnePokemon() {
         const response = await window.fetch(`${api}/1`)
@@ -108,37 +76,8 @@
       this.pokemons = await this.fetchData(IDS)
     }
   };
-  </script>
+</script>
   
-  <style scoped>
-  .cards {
-  display: flex
-}
-img { 
-  width: 100%
-}
-  .card {
-    border: 1px solid silver;
-    border-radius: 8px;
-    max-width: 200px;
-    margin: 0 5px;
-    cursor: pointer;
-    box-shadow: 0px 1px 3px darkgrey;
-    transition: 0.2s;
-  }
-  .title, .content, .description {
-    padding: 16px;
-    text-transform: capitalize;
-    text-align: center;
-  }
-  .title, .content {
-    border-bottom: 1px solid silver;
-  }
-  .title {
-    font-size: 1.25em;
-  }
-  .card:hover {
-    transition: 0.2s;
-    box-shadow: 0px 1px 9px darkgrey;
-  }
+<style scoped>
+
   </style>
